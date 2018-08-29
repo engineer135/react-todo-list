@@ -79,6 +79,32 @@ class App extends Component {
     });
   }
 
+  // 아이템 삭제는 직접 해보자
+  handleRemove = (id) => {
+    /*
+    직접 짠건데.. 멍청아! 굳이 이럴 필요가 없다!
+    const {todos} = this.state;
+
+    // 파라미터로 받은 id로 몇번째 아이템인지 찾음
+    const index = todos.findIndex(todo => todo.id === id);
+
+    // 배열 값 수정할때도, 직접 수정하면 안되고 업데이트할 배열이나 객체를 복사해서 수정해줘야함.
+    const nextTodos = [...todos]; // 배열을 복사
+    nextTodos.splice(index,1); // 해당인덱스에서 하나의 항목을 삭제!
+    this.setState({
+      todos: nextTodos
+    });
+    */
+
+    // 대신 필터 함수를 사용하자.
+    // 함수형 프로그래밍에 취한다... 캬... -_-
+    const { todos } = this.state;
+    this.setState({
+      todos: todos.filter(todo => todo.id !== id)
+    });
+
+  }
+
   render() {
     // 객체 비구조화. 자바스크립트 별게 다 생겼구나 ㅠㅠ
     // https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
@@ -96,6 +122,7 @@ class App extends Component {
       handleCreate,
       handleKeyPress,
       handleToggle,
+      handleRemove,
     } = this;
     // this.handle.. 이런식으로 안써줘도 되니 참 편하지요? 
 
@@ -111,7 +138,7 @@ class App extends Component {
           {
             //템플릿 완성!! 신기하네 -_-
           }
-          <TodoItemList todos={this.state.todos} onToggle={handleToggle}/>
+          <TodoItemList todos={this.state.todos} onToggle={handleToggle} onRemove={handleRemove}/>
       </TodoListTemplate>
     );
   }
