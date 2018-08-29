@@ -15,9 +15,15 @@ class App extends Component {
   }
 
   handleChange = (e) => {
+    // 아.. 여기서 setState를 하지 않으면 render() 함수 호출을 안하는구나.
+    // 부모 컴포넌트가 리렌더링 되면, 자식 컴포넌트들도 렌더링이 되고.. 
+    // 그래서 필요할때만 렌더링시키는 최적화가 필요하군.
+    //console.log("form on chage but not set state")
+    
     this.setState({
       input: e.target.value // input 의 다음 바뀔 값
     });
+    
   }
 
   handleKeyPress = (e) => {
@@ -116,7 +122,7 @@ class App extends Component {
     console.log(q); // true
     */
    //console.log(this);
-    const {input} = this.state;
+    const {input, todos} = this.state;
     const{
       handleChange,
       handleCreate,
@@ -138,7 +144,7 @@ class App extends Component {
           {
             //템플릿 완성!! 신기하네 -_-
           }
-          <TodoItemList todos={this.state.todos} onToggle={handleToggle} onRemove={handleRemove}/>
+          <TodoItemList todos={todos} onToggle={handleToggle} onRemove={handleRemove}/>
       </TodoListTemplate>
     );
   }

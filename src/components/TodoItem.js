@@ -2,8 +2,22 @@ import React, { Component } from 'react';
 import './TodoItem.css';
 
 class TodoItem extends Component{
+    shouldComponentUpdate(nextProps, nextState) {
+        // 리스트 최적화 했던 것처럼 아이템도 최적화 가능
+        // 삭제나 체크/해제시, 새 todo 입력시 하나의 TodoItem 컴포넌트만 업데이트하면 되잖아? 
+        // 그러므로 이것도 최적화 가능..
+        // 삭제할땐 아예 아이템 자체가 사라지므로 여기까지 타지도 않음..
+        //console.log("item shouldComponentUpdate");
+        //console.log(this.props.checked);
+        //console.log(nextProps.checked);
+        return this.props.checked !== nextProps.checked;
+    }
+
     render(){
         const {text, checked, id, onToggle, onRemove} = this.props;
+
+        //console.log("item render");
+        //console.log(id);        
 
         return(
             // 아이디를 파라미터로 넘겨줄때 onClick={onToggle{id}} 로 하면 절대 안됨.
