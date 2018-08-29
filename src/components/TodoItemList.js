@@ -7,11 +7,24 @@ class TodoItemList extends Component {
     render(){
         const { todos, onToggle, onRemove } = this.props;
 
+        // props로 넘어온 todos 배열을, 맵함수로 todoList 생성..
+        // 배열인데 {todos} 이렇게 사용하면 에러가 난다. 컴포넌트 배열로 변환해줘야함!
+        const todoList = todos.map(
+            ({id, text, checked})=>(
+                <TodoItem
+                    id={id}
+                    text={text}
+                    checked={checked}
+                    onToggle={onToggle}
+                    onRemove={onRemove}
+                    key={id}
+                />
+            )
+        );
+
         return(
             <div>
-                <TodoItem text="헬로"/>
-                <TodoItem text="리액트"/>
-                <TodoItem text="방가방가"/>
+                {todoList}
             </div>
         );
     }
