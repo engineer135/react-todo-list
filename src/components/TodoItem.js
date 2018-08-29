@@ -17,6 +17,7 @@ class TodoItem extends Component{
                 </div>
                 {
                     // checked 값에 따라 className에 checked라는 문자열을 넣어준다.
+                    // (JavaScript logical && operator 이걸 사용한거구나.. 생소하다.)
                     // 아래는 "todo-text " + checked && 'checked'와 동일하지만
                     // checked 값이 false 일때는 todo-text false 와 같은 결과값이 나타난다.
                     // 이것까지 고쳐준다면

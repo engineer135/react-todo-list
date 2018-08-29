@@ -21,7 +21,7 @@ class App extends Component {
   }
 
   handleKeyPress = (e) => {
-    console.log(e);
+    //console.log(e);
     if(e.key === 'Enter'){
       this.handleCreate();
     }
@@ -52,6 +52,32 @@ class App extends Component {
     });
   };
 
+  // 클릭시 체크 표시/해제
+  // 모든 todo item이 사용하는 함수이므로 여기에 하나만 만들고 props로 던져준다..
+  handleToggle = (id) => {
+    const {todos} = this.state;
+
+    // 파라미터로 받은 id로 몇번째 아이템인지 찾음
+    const index = todos.findIndex(todo => todo.id === id);
+
+    // 배열 값 수정할때도, 직접 수정하면 안되고 업데이트할 배열이나 객체를 복사해서 수정해줘야함.
+    const selected = todos[index];
+    const nextTodos = [...todos]; // 배열을 복사
+
+    // 여기 점 세개는 전개연산자라는 놈이다.
+    // var parts = ['shoulders', 'knees'];
+    // var lyrics = ['head', ...parts, 'and', 'toes']; // ["head", "shoulders", "knees", "and", "toes"]
+
+    // 기존 값들을 복사하고, checked 값을 덮어쓴다
+    nextTodos[index] = {
+      ...selected,
+      checked: !selected.checked
+    };
+
+    this.setState({
+      todos: nextTodos
+    });
+  }
 
   render() {
     // 객체 비구조화. 자바스크립트 별게 다 생겼구나 ㅠㅠ
@@ -69,6 +95,7 @@ class App extends Component {
       handleChange,
       handleCreate,
       handleKeyPress,
+      handleToggle,
     } = this;
     // this.handle.. 이런식으로 안써줘도 되니 참 편하지요? 
 
@@ -84,7 +111,7 @@ class App extends Component {
           {
             //템플릿 완성!! 신기하네 -_-
           }
-          <TodoItemList todos={this.state.todos}/>
+          <TodoItemList todos={this.state.todos} onToggle={handleToggle}/>
       </TodoListTemplate>
     );
   }
