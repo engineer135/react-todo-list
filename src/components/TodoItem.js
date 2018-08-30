@@ -14,10 +14,14 @@ class TodoItem extends Component{
     }
 
     render(){
-        const {text, checked, id, onToggle, onRemove} = this.props;
+        const {text, checked, id, onToggle, onRemove, color} = this.props;
 
         //console.log("item render");
-        //console.log(id);        
+        //console.log(id);
+        
+        const styles = {
+            color : color
+        }
 
         return(
             // 아이디를 파라미터로 넘겨줄때 onClick={onToggle{id}} 로 하면 절대 안됨.
@@ -39,7 +43,7 @@ class TodoItem extends Component{
                     // 동적인 클래스 쓰고 싶으면, classnames라는 모듈을 사용하면 더 간단히 됨.
                 }
                 <div className={`todo-text ${checked && 'checked'}`}>
-                    <div>{text}</div>
+                    <div style={styles}>{text}</div>
                 </div>
                 {
                     checked && (<div className="check-mark">&#x2713;</div>)

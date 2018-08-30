@@ -2,16 +2,19 @@ import React, { Component } from 'react';
 import TodoListTemplate from './components/TodoListTemplate';
 import Form from './components/Form';
 import TodoItemList from './components/TodoItemList';
+import Palette from './components/Palette';
 
 class App extends Component {
   id=3
+  colors=['#343a40', '#f03e3e', '#12b886', '#228ae6']
   state={
     input: '',
     todos:[
       {id:0, text:'리액트 소개0', checked: false},
       {id:1, text:'리액트 소개1', checked: false},
       {id:2, text:'리액트 소개2', checked: false},
-    ]
+    ],
+    color: '',
   }
 
   handleChange = (e) => {
@@ -34,7 +37,7 @@ class App extends Component {
   };
 
   handleCreate = () => {
-    const {input, todos} = this.state;
+    const {input, todos, color} = this.state;
     this.setState({
       input: '', // 인풋은 비우고
       // concat으로 배열에 추가. 
@@ -54,7 +57,7 @@ class App extends Component {
 
         .. 라고 한다.
       */
-      todos: todos.concat({id: this.id++, text: input, checked: false})
+      todos: todos.concat({id: this.id++, text: input, checked: false, color: color})
     });
   };
 
@@ -111,6 +114,13 @@ class App extends Component {
 
   }
 
+  // color 변경하기
+  handleColor = (id) => {
+    this.setState({
+      color : this.colors[id]
+    });
+  }
+
   render() {
     // 객체 비구조화. 자바스크립트 별게 다 생겼구나 ㅠㅠ
     // https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
@@ -122,13 +132,15 @@ class App extends Component {
     console.log(q); // true
     */
    //console.log(this);
-    const {input, todos} = this.state;
+    const {input, todos, color} = this.state;
     const{
       handleChange,
       handleCreate,
       handleKeyPress,
       handleToggle,
       handleRemove,
+      colors,
+      handleColor,
     } = this;
     // this.handle.. 이런식으로 안써줘도 되니 참 편하지요? 
 
@@ -139,8 +151,17 @@ class App extends Component {
           onKeyPress={handleKeyPress}
           onChange={handleChange}
           onCreate={handleCreate}
+          color={color}
         />
-      }>
+      }
+      palette={
+        <Palette
+          colors={colors}
+          onColorSelect={handleColor}
+          selectedColor={color}
+        />
+      }
+      >
           {
             //템플릿 완성!! 신기하네 -_-
           }
